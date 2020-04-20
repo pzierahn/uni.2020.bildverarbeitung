@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 def task2():
     print("############## task2")
 
@@ -56,7 +57,6 @@ def scrabble(word: str):
     score = 0
 
     for char in word.lower():
-
         score += values.get(char, 0)
 
     print(score)
