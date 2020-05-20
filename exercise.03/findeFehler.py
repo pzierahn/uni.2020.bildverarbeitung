@@ -55,6 +55,8 @@ def prune_cluster(inx: int, iny: int) -> int:
     while len(queue) > 0:
         xy = queue.pop(0)
 
+        # Neighbor Pixel is not part of the cluster
+        # OR it is market as part of the cluster.
         if img_copy[xy] == 0 or img_copy[xy] == 0xff:
             continue
 
