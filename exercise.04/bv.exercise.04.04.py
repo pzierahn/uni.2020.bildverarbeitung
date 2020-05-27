@@ -2,8 +2,8 @@ import math
 import skimage.io
 import numpy as np
 
-def get_nearest_neighbor(shape: tuple, x_point: float, y_point: float) -> (int, int):
 
+def get_nearest_neighbor(shape: tuple, x_point: float, y_point: float) -> (int, int):
     x_min = max(0, math.floor(x_point))
     x_max = min(shape[0], math.floor(x_point + 1))
 
