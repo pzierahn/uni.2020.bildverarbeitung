@@ -1,9 +1,8 @@
 import math
 import skimage.io
 import numpy as np
-import matplotlib.pyplot as plt
 
-scale = 0.5
+scale = 2.3
 
 img = np.array(skimage.io.imread("tv.png"), np.uint8)
 print("img.shape", img.shape)
