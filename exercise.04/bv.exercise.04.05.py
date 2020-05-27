@@ -47,5 +47,5 @@ def scale_img(img: np.array, scale: float) -> np.array:
 
 
 img = np.array(skimage.io.imread("tv.png"), np.uint8)
-newImg = scale_img(img, 6.7)
+newImg = scale_img(img, 2.7)
 skimage.io.imsave("tv.new.png", newImg)
