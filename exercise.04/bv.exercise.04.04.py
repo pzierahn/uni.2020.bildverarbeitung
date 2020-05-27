@@ -5,10 +5,10 @@ import numpy as np
 
 def get_nearest_neighbor(shape: tuple, x_point: float, y_point: float) -> (int, int):
     x_min = max(0, math.floor(x_point))
-    x_max = min(shape[0], math.floor(x_point + 1))
+    x_max = min(shape[0] - 1, math.floor(x_point + 1))
 
     y_min = max(0, math.floor(y_point))
-    y_max = min(shape[1], math.floor(y_point + 1))
+    y_max = min(shape[1] - 1, math.floor(y_point + 1))
 
     dist = float("inf")
     pixel = (0, 0)
