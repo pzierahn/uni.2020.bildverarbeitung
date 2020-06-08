@@ -55,30 +55,25 @@ saettigung = skimage.color.rgb2hsv(saettigung)
 
 for inx in range(0, saettigung.shape[0]):
     for iny in range(0, saettigung.shape[1]):
-        saettigung[inx][iny][2] = 0
+        saettigung[inx][iny][2] = 1
 
 saettigung = skimage.color.hsv2rgb(saettigung)
-skimage.io.imsave("bv.exercise.05.04.06.0.png", saettigung)
+skimage.io.imsave("bv.exercise.05.04.06.1.png", saettigung)
 
 # 7. Verändert die Farbtöne (hue) des Bildes indem ihr alle Farbtöne im Bild um jeweils ...
 
-# farbton = np.copy(img)
-# farbton = skimage.color.rgb2hsv(farbton)
-#
-# saettigung = np.copy(img)
-# saettigung = skimage.color.rgb2hsv(saettigung)
-#
-# for inx in range(0, saettigung.shape[0]):
-#     for iny in range(0, saettigung.shape[1]):
-#
-#         print("rgb", img[inx][iny])
-#         print("hsv", saettigung[inx][iny])
-#         print("hsv", 360 * 0.14157706)
-#
-#         saettigung[inx][iny][0] = ((60 / 360) + saettigung[inx][iny][0]) % 1
-#         exit(0)
-#
-# saettigung = skimage.color.hsv2rgb(saettigung)
-# skimage.io.imsave("bv.exercise.05.04.06.png", saettigung)
-#
+farbton = np.copy(img)
+farbton = skimage.color.rgb2hsv(farbton)
+
+for inx in range(0, farbton.shape[0]):
+    for iny in range(0, farbton.shape[1]):
+
+        # print("rgb", img[inx][iny])
+        # print("hsv", farbton[inx][iny])
+        # print("hsv", 360 * 0.14157706)
+
+        farbton[inx][iny][0] = ((240 / 360) + farbton[inx][iny][0]) % 1
+
+farbton = skimage.color.hsv2rgb(farbton)
+skimage.io.imsave("bv.exercise.05.04.07.240.png", farbton)
 
