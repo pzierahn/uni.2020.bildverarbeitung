@@ -67,11 +67,6 @@ farbton = skimage.color.rgb2hsv(farbton)
 
 for inx in range(0, farbton.shape[0]):
     for iny in range(0, farbton.shape[1]):
-
-        # print("rgb", img[inx][iny])
-        # print("hsv", farbton[inx][iny])
-        # print("hsv", 360 * 0.14157706)
-
         farbton[inx][iny][0] = ((240 / 360) + farbton[inx][iny][0]) % 1
 
 farbton = skimage.color.hsv2rgb(farbton)
