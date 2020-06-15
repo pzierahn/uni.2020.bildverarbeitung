@@ -53,7 +53,15 @@ def formel_2(bild: numpy.array) -> (float, float):
 
     return standard_deviation, mean
 
-
+# 3. Vergleicht nun eure Implementationen im Hinblick auf
+# das Ergebnis und auf die Ausführungszeit.
+# Findet und notiert eine Erklärung,
+# warum die Ergebnisse leicht voneinander abweichen.
+# Zum Ver- gleich der Ausführungszeiten soll je Funktion
+# 10 mal die Varianz auf dem Testbild mandrill.png
+# berechnet werden. Für die Zeitmessung solltet
+# ihr auf die Funktion time.time(), die auf dem
+# Aufgabenblatt 1 beschrieben wurde, zurückgreifen.
 def time_test(bild: numpy.array):
     start = time.time()
     for _ in range(10):
