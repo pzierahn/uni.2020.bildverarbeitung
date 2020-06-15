@@ -1,3 +1,4 @@
+import time
 import numpy
 import skimage.io
 
@@ -28,9 +29,9 @@ def formel_1(bild: numpy.array):
 
     standard_deviation /= cols * rows
 
-    print("Formel 1")
-    print("mean", mean)
-    print("standard_deviation", standard_deviation)
+    # print("Formel 1")
+    # print("mean", mean)
+    # print("standard_deviation", standard_deviation)
 
 
 # 2. Implementiert nun eine Funktion für die Varianzberechnung in einem Durchlauf nach Formel 2.
@@ -52,14 +53,29 @@ def formel_2(bild: numpy.array):
     mean /= cols * rows
     standard_deviation = (standard_deviation / (cols * rows)) - (mean ** 2)
 
-    print("Formel 2")
-    print("mean", mean)
-    print("standard_deviation", standard_deviation)
+    # print("Formel 2")
+    # print("mean", mean)
+    # print("standard_deviation", standard_deviation)
+
+
+def time_test(bild: numpy.array):
+    start = time.time()
+    for _ in range(10):
+        formel_1(bild)
+
+    end = time.time()
+    print("elapsed time formel_1", (end - start))
+
+    start = time.time()
+    for _ in range(10):
+        formel_2(bild)
+
+    end = time.time()
+    print("elapsed time formel_2", (end - start))
 
 
 bild = skimage.io.imread("mandrill.png")
-formel_1(bild)
-formel_2(bild)
+time_test(bild)
 
-# print("bild", bild)
-# print("bild", type(bild))
+# formel_1(bild)
+# formel_2(bild)
