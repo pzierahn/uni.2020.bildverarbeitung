@@ -2,6 +2,12 @@ import numpy
 import skimage.io
 
 
+# 1. Schreibt zunächst eine Funktion, welche die Varianz nach Formel 1 in zwei Durchläufen durch
+# das Bild berechnet. Im ersten Durchlauf soll dabei der Mittelwert μI berechnet werden und im
+# zweiten Durchlauf schließlich die Varianz. Nutzt dazu unbedingt zwei verschachtelte for-Schleifen
+# pro Durchlauf, um über die Pixel zu iterieren, und nutzt zur Berechnung keine Funktionen wie
+# np.mean() oder np.var(). Testet eure Funktion an dem bekannten Testbild mandrill.png aus
+# dem Moodle.
 def formel_1(bild: numpy.array):
     cols = bild.shape[0]
     rows = bild.shape[1]
@@ -27,6 +33,10 @@ def formel_1(bild: numpy.array):
     print("standard_deviation", standard_deviation)
 
 
+# 2. Implementiert nun eine Funktion für die Varianzberechnung in einem Durchlauf nach Formel 2.
+# Nutzt dazu erneut unbedingt zwei verschachtelte for-Schleifen pro Durchlauf, um über die Pixel
+# zu iterieren, und nutzt zur Berechnung erneut keine Funktionen wie np.mean() oder np.var().
+# Testet eure Funktion wieder am Testbild mandrill.png.
 def formel_2(bild: numpy.array):
     cols = bild.shape[0]
     rows = bild.shape[1]
