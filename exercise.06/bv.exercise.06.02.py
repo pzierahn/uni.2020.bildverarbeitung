@@ -53,6 +53,7 @@ def formel_2(bild: numpy.array) -> (float, float):
 
     return standard_deviation, mean
 
+
 # 3. Vergleicht nun eure Implementationen im Hinblick auf
 # das Ergebnis und auf die Ausführungszeit.
 # Findet und notiert eine Erklärung,
