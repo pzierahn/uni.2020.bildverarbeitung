@@ -27,6 +27,7 @@ def mittler_absoluten_unterschied(img1: numpy.array, img2: numpy.array) -> float
 
 print("mittler_absoluten_unterschied", mittler_absoluten_unterschied(img, rauschen))
 
+
 # 3. Wendet nun verschiedene Varianten eines Box-Filters auf das verrauschte Bild an. Die Varianten
 # sollen sich in der Größe des n×n Filterkerns unterscheiden mit n ∈ {3, 5, 7, 9, 11}. Erstellt zunächst
 # einen Filterkern entsprechender Größe und normiert diesen, sodass die Summe über den Filterkern
@@ -35,12 +36,23 @@ print("mittler_absoluten_unterschied", mittler_absoluten_unterschied(img, rausch
 # Visualisiert zudem das beste Ergebnis.
 
 def apply_box_filter(n: int):
-    box_filter = numpy.full((n, n), (1 / (n**2)))
+    box_filter = numpy.full((n, n), (1 / (n ** 2)))
     faltung = scipy.ndimage.convolve(rauschen, box_filter)
     skimage.io.imsave(f"bv.exercise.07.03.03.faltung.{n}.png", faltung)
+
 
 apply_box_filter(3)
 apply_box_filter(5)
 apply_box_filter(7)
 apply_box_filter(9)
 apply_box_filter(11)
+
+
+# 4. Wendet nun den Gauß-Filter mit unterschiedlichen Varianzen auf dasselbe verrauschte Bild an.
+# Testet Varianzen im Bereich 0.1,...,2 in Schritten von 0.1 und vergleicht das Ergebnis erneut
+# mit Hilfe der mittleren Differenz mit dem Originalbild. Welcher Filter liefert das bessere Ergebnis
+# (geringere mittlere Differenz zum Originalbild)? Visualisiert zudem das beste Ergebnis mit dem
+# Gauß-Filter. Sieht man einen Unterschied im Vergleich zum besten Ergebnis des Box-Filters?
+
+def apply_gauss_filter(n: int):
+    pass
