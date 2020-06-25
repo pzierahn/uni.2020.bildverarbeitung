@@ -12,7 +12,7 @@ import scipy.ndimage
 img = numpy.array(skimage.io.imread("einstein.png"), numpy.uint8) / 0xff
 skimage.io.imsave("bv.exercise.07.03.01.png", img)
 
-rauschen = skimage.util.random_noise(img, mode="gaussian", var=0.01)
+rauschen = skimage.util.random_noise(numpy.copy(img), mode="gaussian", var=0.01)
 skimage.io.imsave("bv.exercise.07.03.01.rauschen.png", rauschen)
 
 
@@ -66,7 +66,7 @@ print("best_box_diff", best_box_diff)
 # (geringere mittlere Differenz zum Originalbild)? Visualisiert zudem das beste Ergebnis mit dem
 # Gauß-Filter. Sieht man einen Unterschied im Vergleich zum besten Ergebnis des Box-Filters?
 
-def apply_gauss_filter(n: int, sig: float) -> numpy.array:
+def apply_gauss_filter(label: str, image: numpy.array, n: int, sig: float) -> numpy.array:
     gauss_filter = numpy.zeros((n, n))
 
     dir = "bv.exercise.07.03.04.gauss"
@@ -82,31 +82,48 @@ def apply_gauss_filter(n: int, sig: float) -> numpy.array:
     # print("gauss_filter")
     # print(gauss_filter)
 
-    faltung = scipy.ndimage.convolve(rauschen, gauss_filter)
-    # skimage.io.imsave(f"{dir}/{n}x{n}-{sig}.png", faltung)
+    faltung = scipy.ndimage.convolve(image, gauss_filter)
+    tmp = numpy.array(faltung * 255, numpy.uint8)
+    skimage.io.imsave(f"{dir}/{label}.{n}x{n}-{sig}.png", tmp)
 
     return faltung
 
 
-best_n = -1.0
-best_sig = -1.0
-best_diff = -1.0
+def get_best_fit(label: str, image: numpy.array) -> (int, float, float):
+    best_n = -1
+    best_sig = -1.0
+    best_diff = -1.0
 
-for n in [3, 5, 7, 9, 11]:
-    for inx in range(1, 21):
-        sig = inx * 0.1
-        gauss_img = apply_gauss_filter(n, sig)
-        diff = mittler_absoluten_unterschied(img, gauss_img)
+    for n in [3, 5, 7, 9, 11]:
+        for inx in range(1, 21):
+            sig = inx * 0.1
+            gauss_img = apply_gauss_filter(label, image, n, sig)
+            diff = mittler_absoluten_unterschied(img, gauss_img)
 
-        if best_diff < 0 or best_diff > diff:
-            best_n = n
-            best_sig = sig
-            best_diff = diff
+            if best_diff < 0 or best_diff > diff:
+                best_n = n
+                best_sig = sig
+                best_diff = diff
 
-        # print("sig", sig)
-        # print("diff", diff)
-        # break
+    return best_n, best_sig, best_diff
 
-print("best_n", best_n)
-print("best_sig", best_sig)
-print("best_diff", best_diff)
+
+best_n, best_sig, best_diff = get_best_fit("rauschen", rauschen)
+print("[4] best_n", best_n)
+print("[4] best_sig", best_sig)
+print("[4] best_diff", best_diff)
+
+# 5. Verrauscht nun das Originalbild einstein.png mit Salt and Pepper Noise. Nutzt dazu erneut
+# die Funktion skimage.util.random_noise() mit dem Parameter mode=’s&p’ oder eure Lösung
+# von Aufgabenblatt 2 Aufgabe 5. Die Wahrscheinlichkeit für das Auftreten von Salt und Pepper
+# soll bei 0.1 liegen. Wendet nun den Gauß-Filter mit verschiedenen Varianzen (erneut im Bereich
+# 0.1, . . . , 2 in Schritten von 0.1) auf das mit Salt and Pepper Noise verrauscht Bild an. Wie groß
+# ist die geringste mittlere Distanz zum Originalbild? Visualisiert auch das Ergebnis.
+
+salt_and_pepper = skimage.util.random_noise(img, mode="s&p")
+skimage.io.imsave("bv.exercise.07.03.05.s-and-p.png", salt_and_pepper)
+
+best_n, best_sig, best_diff = get_best_fit("salt_and_pepper", salt_and_pepper)
+print("[5] best_n", best_n)
+print("[5] best_sig", best_sig)
+print("[5] best_diff", best_diff)
