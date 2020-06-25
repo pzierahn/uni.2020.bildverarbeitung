@@ -1,3 +1,5 @@
+import os
+import math
 import numpy
 import skimage.io
 import scipy.ndimage
@@ -54,5 +56,42 @@ apply_box_filter(11)
 # (geringere mittlere Differenz zum Originalbild)? Visualisiert zudem das beste Ergebnis mit dem
 # Gauß-Filter. Sieht man einen Unterschied im Vergleich zum besten Ergebnis des Box-Filters?
 
-def apply_gauss_filter(n: int):
-    pass
+def apply_gauss_filter(n: int, sig: float) -> numpy.array:
+    gauss_filter = numpy.zeros((n, n))
+
+    dir = "bv.exercise.07.03.04.gauss"
+    os.makedirs(dir, exist_ok=True)
+
+    for nx in range(n):
+        for ny in range(n):
+            r = math.sqrt((nx - 1) ** 2 + (ny - 1)**2)
+            gauss_filter[nx][ny] = math.exp(-((r ** 2) / (2 * sig ** 2)))
+
+    print("gauss_filter")
+    print(gauss_filter)
+
+    faltung = scipy.ndimage.convolve(rauschen, gauss_filter)
+    skimage.io.imsave(f"{dir}/{n}x{n}-{sig}.png", faltung)
+
+    return faltung
+
+
+best_sig = -1.0
+best_diff = -1.0
+
+for inx in range(1, 21):
+    sig = inx * 0.1
+    gauss_img = apply_gauss_filter(3, sig)
+    diff = mittler_absoluten_unterschied(img, gauss_img)
+
+    if best_diff < 0 or best_diff > diff:
+        best_sig = sig
+        best_diff = diff
+
+    print("sig", sig)
+    print("diff", diff)
+
+    # break
+
+print("best_sig", best_sig)
+print("best_diff", best_diff)
