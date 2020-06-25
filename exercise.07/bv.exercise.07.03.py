@@ -37,17 +37,27 @@ print("mittler_absoluten_unterschied", mittler_absoluten_unterschied(img, rausch
 # zu falten. Evaluiert, welche Größe n zur geringsten mittleren Differenz zum Originalbild führt.
 # Visualisiert zudem das beste Ergebnis.
 
-def apply_box_filter(n: int):
+def apply_box_filter(n: int) -> numpy.array:
     box_filter = numpy.full((n, n), (1 / (n ** 2)))
     faltung = scipy.ndimage.convolve(rauschen, box_filter)
     skimage.io.imsave(f"bv.exercise.07.03.03.faltung.{n}.png", faltung)
 
+    return faltung
 
-apply_box_filter(3)
-apply_box_filter(5)
-apply_box_filter(7)
-apply_box_filter(9)
-apply_box_filter(11)
+
+best_box_n = -1.0
+best_box_diff = -1.0
+
+for n in [3, 5, 7, 9, 11]:
+    box_img = apply_box_filter(n)
+    diff = mittler_absoluten_unterschied(img, box_img)
+
+    if best_box_diff < 0 or best_box_diff > diff:
+        best_box_n = n
+        best_box_diff = diff
+
+print("best_box_n", best_box_n)
+print("best_box_diff", best_box_diff)
 
 
 # 4. Wendet nun den Gauß-Filter mit unterschiedlichen Varianzen auf dasselbe verrauschte Bild an.
@@ -66,33 +76,37 @@ def apply_gauss_filter(n: int, sig: float) -> numpy.array:
 
     for nx in range(n):
         for ny in range(n):
-            r = math.sqrt((nx - center) ** 2 + (ny - center)**2)
+            r = math.sqrt((nx - center) ** 2 + (ny - center) ** 2)
             gauss_filter[nx][ny] = math.exp(-((r ** 2) / (2 * sig ** 2)))
 
     # print("gauss_filter")
     # print(gauss_filter)
 
     faltung = scipy.ndimage.convolve(rauschen, gauss_filter)
-    skimage.io.imsave(f"{dir}/{n}x{n}-{sig}.png", faltung)
+    # skimage.io.imsave(f"{dir}/{n}x{n}-{sig}.png", faltung)
 
     return faltung
 
 
+best_n = -1.0
 best_sig = -1.0
 best_diff = -1.0
 
-for inx in range(1, 21):
-    sig = inx * 0.1
-    gauss_img = apply_gauss_filter(5, sig)
-    diff = mittler_absoluten_unterschied(img, gauss_img)
+for n in [3, 5, 7, 9, 11]:
+    for inx in range(1, 21):
+        sig = inx * 0.1
+        gauss_img = apply_gauss_filter(n, sig)
+        diff = mittler_absoluten_unterschied(img, gauss_img)
 
-    if best_diff < 0 or best_diff > diff:
-        best_sig = sig
-        best_diff = diff
+        if best_diff < 0 or best_diff > diff:
+            best_n = n
+            best_sig = sig
+            best_diff = diff
 
-    # print("sig", sig)
-    # print("diff", diff)
-    # break
+        # print("sig", sig)
+        # print("diff", diff)
+        # break
 
+print("best_n", best_n)
 print("best_sig", best_sig)
 print("best_diff", best_diff)
