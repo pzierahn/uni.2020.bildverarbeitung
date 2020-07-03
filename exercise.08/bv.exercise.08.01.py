@@ -80,10 +80,10 @@ def main():
 
         for inx in range(3):
             for iny in range(3):
-                w_r = prewitt_right[inx, iny]
-                w_l = prewitt_bottom[inx, iny]
-                # w_r = sobel_right[inx, iny]
-                # w_l = sobel_bottom[inx, iny]
+                # w_r = prewitt_right[inx, iny]
+                # w_l = prewitt_bottom[inx, iny]
+                w_r = sobel_right[inx, iny]
+                w_l = sobel_bottom[inx, iny]
                 pixel_r = w_r * matrix[inx, iny]
                 pixel_l = w_l * matrix[inx, iny]
 
@@ -91,7 +91,7 @@ def main():
                 sum_l += pixel_l
 
         # gradient = math.atan(sum_l / sum_r)
-        # print(f"{labels[xx]} :: {sum_l} / {sum_r} = {gradient}")
+        # print(f"{labels[xx]} :: tan ^ -1 ({sum_l} / {sum_r}) = {gradient}")
         print(f"{labels[xx]} :: sqrt({sum_r} ^ 2 + {sum_l} ^ 2) =", math.sqrt((sum_r ** 2) + (sum_l ** 2)))
         # print(f"{labels[xx]} :: [{sum_r}, {sum_l}].T")
 
