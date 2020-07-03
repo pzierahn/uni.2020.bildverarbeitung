@@ -1,3 +1,4 @@
+import math
 import numpy
 
 a213 = numpy.array([[210, 212, 10],
@@ -47,22 +48,53 @@ sobel_bottom = numpy.array([[-1, -2, -1],
                             [0, 0, 0],
                             [1, 2, 1]])
 
-for xx in range(len(matrixs)):
 
-    matrix = matrixs[xx]
-    parts = []
-    sum = 0
+def main_2():
+    for xx in range(len(matrixs)):
 
-    for inx in range(3):
-        for iny in range(3):
-            # w = prewitt_right[inx, iny]
-            # w = prewitt_bottom[inx, iny]
-            # w = sobel_right[inx, iny]
-            w = sobel_bottom[inx, iny]
-            pixel = w * matrix[inx, iny]
+        matrix = matrixs[xx]
+        parts = []
+        sum = 0
 
-            sum += pixel
-            parts += [str(pixel)]
+        for inx in range(3):
+            for iny in range(3):
+                w = prewitt_right[inx, iny]
+                # w = prewitt_bottom[inx, iny]
+                # w = sobel_right[inx, iny]
+                # w = sobel_bottom[inx, iny]
+                pixel = w * matrix[inx, iny]
 
-    # print(labels[xx])
-    print(labels[xx], "::", " + ".join(parts), "=", sum)
+                sum += pixel
+                parts += [str(pixel)]
+
+        # print(labels[xx])
+        print(labels[xx], "::", " + ".join(parts), "=", sum)
+
+
+def main():
+    for xx in range(len(matrixs)):
+
+        matrix = matrixs[xx]
+        sum_r = 0
+        sum_l = 0
+
+        for inx in range(3):
+            for iny in range(3):
+                w_r = prewitt_right[inx, iny]
+                w_l = prewitt_bottom[inx, iny]
+                # w_r = sobel_right[inx, iny]
+                # w_l = sobel_bottom[inx, iny]
+                pixel_r = w_r * matrix[inx, iny]
+                pixel_l = w_l * matrix[inx, iny]
+
+                sum_r += pixel_r
+                sum_l += pixel_l
+
+        # gradient = math.atan(sum_l / sum_r)
+        # print(f"{labels[xx]} :: {sum_l} / {sum_r} = {gradient}")
+        print(f"{labels[xx]} :: sqrt({sum_r} ^ 2 + {sum_l} ^ 2) =", math.sqrt((sum_r ** 2) + (sum_l ** 2)))
+        # print(f"{labels[xx]} :: [{sum_r}, {sum_l}].T")
+
+
+if __name__ == '__main__':
+    main()
